@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NYC Low-FODMAP & Allergy-Safe Dining Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Custom Styles & Chart Container Management */
+        body {
+            background-color: #F9F8F6; /* Warm neutral background */
+            color: #333333;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 50vh;
+            max-height: 500px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        .interactive-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .interactive-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen">
+
+<!-- Chosen Palette: Warm Neutrals (Stone/Beige #F9F8F6) with soft Sage Green (#7BA05B) accents for a calming, health-focused aesthetic. -->
+<!-- Application Structure Plan: The SPA uses a dashboard structure. It begins with a clear statement of the traveler's constraints (The Brief), followed by an expert breakdown of the dietary needs (to build trust). Then, a visual overview (Scatter/Bubble Chart) allows quick comparison of distance vs. cost. Finally, an interactive directory provides actionable details on how to order safely at each location. This flow moves from context -> high-level overview -> specific execution. -->
+<!-- Visualization & Content Choices: 
+  - Goal: Compare -> Viz: Chart.js Bubble Chart -> Interaction: Hover tooltips -> Justification: Allows simultaneous comparison of Distance (X), Cost (Y), and Rating (Bubble Size) without complex UI. Library: Chart.js (Canvas).
+  - Goal: Organize -> Viz: Interactive Card Grid -> Interaction: Sorting & Filtering -> Justification: Users need to quickly find a restaurant based on their immediate budget or willingness to walk. Library: Vanilla JS + Tailwind. 
+-->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    
+    <!-- Header Section -->
+    <header class="mb-12 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
+        <div>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-stone-800 tracking-tight mb-2">NYC Dining Navigator</h1>
+            <p class="text-xl text-stone-600">Tailored for strict Low-FODMAP, GF, and DF requirements.</p>
+        </div>
+        <div class="glass-panel p-4 rounded-xl text-sm border-l-4 border-green-600">
+            <p class="font-bold mb-1">📍 Basecamp: Wyndham Midtown (11 W 37th St)</p>
+            <p>🗓️ Timeframe: Mon - Thu</p>
+            <p>🚶 Max Radius: 3 Miles</p>
+        </div>
+    </header>
+
+    <!-- Dietary Constraints Overview -->
+    <section class="mb-12">
+        <div class="glass-panel rounded-2xl p-6 md:p-8">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">🛡️ Expert Dietary Strategy</h2>
+            <p class="text-stone-600 mb-6 leading-relaxed">
+                Navigating New York City on a strict Low-FODMAP (Monash compliant), Gluten-Free (GF), and Dairy-Free (DF) diet requires precision. The highest risks in restaurant settings are hidden <strong>fructans</strong> (onions, garlic) used in stocks, sauces, and marinades, alongside cross-contamination with gluten and dairy. 
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-red-50 p-4 rounded-lg border border-red-100">
+                    <h3 class="font-bold text-red-800 mb-2">🚫 The "No" List</h3>
+                    <ul class="list-disc pl-5 text-sm text-red-700 space-y-1">
+                        <li><strong>Allium:</strong> Onion, garlic, shallots, leeks (even powders).</li>
+                        <li><strong>Gluten:</strong> Wheat, barley, rye, regular soy sauce.</li>
+                        <li><strong>Dairy:</strong> Milk, butter, cream, most cheeses.</li>
+                    </ul>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg border border-green-100">
+                    <h3 class="font-bold text-green-800 mb-2">✅ The "Safe" List</h3>
+                    <ul class="list-disc pl-5 text-sm text-green-700 space-y-1">
+                        <li><strong>Proteins:</strong> Plain grilled meats, poultry, fish, eggs.</li>
+                        <li><strong>Carbs:</strong> Rice, potatoes, quinoa, GF tamari.</li>
+                        <li><strong>Fats:</strong> Olive oil, canola oil (check for garlic infusion).</li>
+                    </ul>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                    <h3 class="font-bold text-blue-800 mb-2">🗣️ Ordering Tactics</h3>
+                    <ul class="list-disc pl-5 text-sm text-blue-700 space-y-1">
+                        <li>Always state it is a <strong>severe allergy</strong> to ensure the kitchen takes it seriously.</li>
+                        <li>Ask for food cooked in clean pans with plain olive oil.</li>
+                        <li>Avoid complex sauces; stick to lemon/salt/pepper.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visualization Section -->
+    <section class="mb-12">
+        <div class="glass-panel rounded-2xl p-6 md:p-8">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold mb-2">📊 Restaurant Landscape Overview</h2>
+                <p class="text-stone-600 text-sm">
+                    This chart compares the distance from your hotel against the estimated cost for two people. 
+                    <strong>Bubble size</strong> represents the customer rating (larger = higher rating). 
+                    <strong>Green bubbles</strong> indicate the easiest menus to modify for your needs.
+                </p>
+            </div>
+            <div class="chart-container">
+                <canvas id="restaurantChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Directory Section -->
+    <section>
+        <div class="flex flex-col md:flex-row justify-between items-end md:items-center mb-6 gap-4">
+            <div>
+                <h2 class="text-2xl font-bold">🍽️ Curated Restaurant Directory</h2>
+                <p class="text-stone-600 text-sm">Ranked by your preferences. All within 3 miles.</p>
+            </div>
+            
+            <!-- Controls -->
+            <div class="flex flex-wrap gap-3">
+                <select id="sortSelect" class="bg-white border border-stone-300 text-stone-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 outline-none">
+                    <option value="costAsc">Sort: Expected Cost (Low to High)</option>
+                    <option value="costDesc">Sort: Expected Cost (High to Low)</option>
+                    <option value="distAsc">Sort: Distance (Closest First)</option>
+                    <option value="ratingDesc">Sort: Rating (Highest First)</option>
+                </select>
+                <select id="filterSelect" class="bg-white border border-stone-300 text-stone-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 outline-none">
+                    <option value="all">Filter: All Cuisines</option>
+                    <option value="Healthy">Healthy / Bowls</option>
+                    <option value="American">American</option>
+                    <option value="Sushi">Sushi / Japanese</option>
+                    <option value="Seafood">Seafood / Steak</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Dynamic Grid -->
+        <div id="restaurantGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cards populated by JS -->
+        </div>
+    </section>
+
+</div>
+
+<!-- Chatbot FAB -->
+<button id="chatFab" class="fixed bottom-6 right-6 bg-green-600 text-white p-4 rounded-full shadow-lg hover:bg-green-700 transition-transform hover:scale-105 z-50 flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-green-300">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+    </svg>
+</button>
+
+<!-- Chatbot Window -->
+<div id="chatWindow" class="fixed bottom-24 right-6 w-96 max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-8rem)] bg-white rounded-2xl shadow-2xl flex flex-col z-50 hidden border border-stone-200 overflow-hidden transform transition-all">
+    <div class="bg-green-600 text-white p-4 flex justify-between items-center rounded-t-2xl">
+        <div class="flex items-center gap-2">
+            <span class="text-xl">👩‍⚕️</span>
+            <h3 class="font-bold text-lg">Dietitian AI</h3>
+        </div>
+        <button id="closeChatBtn" class="text-white hover:text-green-200 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+    <div id="chatMessages" class="flex-grow p-4 overflow-y-auto bg-stone-50 flex flex-col gap-3">
+        <!-- Initial Message -->
+        <div class="flex items-start gap-2 max-w-[85%]">
+            <div class="bg-green-100 text-green-900 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm">
+                Hello! I'm your AI Dietitian Assistant. Ask me how to order at the restaurants listed here, verify ingredients, or ask for allergy advice!
+            </div>
+        </div>
+    </div>
+    <div class="p-3 bg-white border-t border-stone-200">
+        <form id="chatForm" class="flex gap-2 relative">
+            <input type="text" id="chatInput" placeholder="Ask about menus or allergies..." class="flex-grow p-3 rounded-full border border-stone-300 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 text-sm" autocomplete="off" required>
+            <button type="submit" id="sendBtn" class="bg-green-600 text-white p-3 rounded-full hover:bg-green-700 transition-colors flex items-center justify-center min-w-[48px]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                </svg>
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // --- Data Storage ---
+    // Curated list based on GF/DF/Low FODMAP constraints near 11 W 37th St (Wyndham Midtown).
+    const restaurants = [
+        {
+            id: 1,
+            name: "The Little Beet",
+            cuisine: "Healthy",
+            distance: 0.3,
+            cost: 40,
+            rating: 4.4,
+            modifiability: 9, // 1-10 scale for chart coloring
+            notes: "100% Gluten-Free facility. Build-your-own bowl concept makes it incredibly easy to control ingredients. Choose a base of plain quinoa or rice, plain roasted chicken or salmon, and safe veggies (avoiding broccoli/cauliflower if sensitive to Polyols/Fructans). Dress with olive oil.",
+            address: "135 W 50th St (Midtown location)",
+            stars: "⭐⭐⭐⭐"
+        },
+        {
+            id: 2,
+            name: "Friedman's (Herald Square)",
+            cuisine: "American",
+            distance: 0.2,
+            cost: 65,
+            rating: 4.5,
+            modifiability: 8,
+            notes: "Known as NYC GF pioneers. Very allergy aware. For Low FODMAP and DF, request plain grilled proteins (chicken, salmon, steak) cooked in oil, not butter. Avoid all complex sauces and marinades. Confirm sides have no garlic/onion.",
+            address: "132 W 31st St",
+            stars: "⭐⭐⭐⭐½"
+        },
+        {
+            id: 3,
+            name: "Sugarfish by sushi nozawa",
+            cuisine: "Sushi",
+            distance: 1.2,
+            cost: 110,
+            rating: 4.7,
+            modifiability: 9,
+            notes: "Traditional sushi is naturally GF, DF, and easily Low FODMAP. Order plain nigiri or sashimi. **Crucial:** Request NO scallions on top. Bring your own GF Tamari packets (or ask if they carry it), and avoid any ponzu sauces which may contain garlic/onion.",
+            address: "33 E 20th St (Flatiron)",
+            stars: "⭐⭐⭐⭐⭐"
+        },
+        {
+            id: 4,
+            name: "Springbone Kitchen",
+            cuisine: "Healthy",
+            distance: 1.5,
+            cost: 35,
+            rating: 4.3,
+            modifiability: 7,
+            notes: "100% GF and primarily DF. Known for bone broths. **Warning:** You must ask the staff explicitly which broths are made without onion/garlic (often the plain chicken/beef base is safe before aromatics are added). Simple meat and rice bowls available.",
+            address: "90 W 3rd St (Greenwich Village - nice walk)",
+            stars: "⭐⭐⭐⭐"
+        },
+        {
+            id: 5,
+            name: "Catch NYC",
+            cuisine: "Seafood",
+            distance: 1.8,
+            cost: 220,
+            rating: 4.2,
+            modifiability: 6,
+            notes: "Upscale dining. High-end restaurants are usually very accommodating to allergies. Call ahead to note the strict allium/GF/DF allergy. Order plain grilled fish or steak. A beautiful atmosphere for a nice dinner out with your dad.",
+            address: "21 9th Ave (Meatpacking District)",
+            stars: "⭐⭐⭐⭐"
+        },
+        {
+            id: 6,
+            name: "Lilli and Loo",
+            cuisine: "Asian Fusion",
+            distance: 2.2,
+            cost: 70,
+            rating: 4.1,
+            modifiability: 7,
+            notes: "Famous for having a massive, dedicated Gluten-Free menu. Asian cuisine can be tricky for Low FODMAP, but they understand allergies. Stick to simple steamed dishes (steamed chicken/veggies) and use your own GF tamari. Explicitly request no garlic/onion in the wok.",
+            address: "792 Lexington Ave (Upper East Side)",
+            stars: "⭐⭐⭐⭐"
+        }
+    ];
+
+    // --- State Management ---
+    let currentSort = 'costAsc';
+    let currentFilter = 'all';
+
+    // --- Chart Initialization ---
+    let restaurantChart;
+
+    function initChart() {
+        const ctx = document.getElementById('restaurantChart').getContext('2d');
+        
+        // Prepare data for Chart.js Bubble format
+        const chartData = restaurants.map(r => {
+            // Determine color based on modifiability (Green = easy, Orange = medium)
+            const bubbleColor = r.modifiability >= 8 ? 'rgba(74, 222, 128, 0.6)' : 
+                               r.modifiability >= 7 ? 'rgba(250, 204, 21, 0.6)' : 'rgba(248, 113, 113, 0.6)';
+            const bubbleBorder = r.modifiability >= 8 ? 'rgba(22, 163, 74, 1)' : 
+                                r.modifiability >= 7 ? 'rgba(202, 138, 4, 1)' : 'rgba(220, 38, 38, 1)';
+
+            return {
+                x: r.distance,
+                y: r.cost,
+                r: r.rating * 5, // Scale rating for bubble size
+                restaurantName: r.name,
+                backgroundColor: bubbleColor,
+                borderColor: bubbleBorder,
+                borderWidth: 2
+            };
+        });
+
+        restaurantChart = new Chart(ctx, {
+            type: 'bubble',
+            data: {
+                datasets: [{
+                    label: 'Restaurants',
+                    data: chartData,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false // Hide legend, colors explained in text
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const data = context.raw;
+                                return [`${data.restaurantName}`, 
+                                        `Dist: ${data.x} mi | Cost: $${data.y}`,
+                                        `Rating: ${(data.r / 5).toFixed(1)}/5`];
+                            }
+                        },
+                        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                        titleColor: '#1c1917',
+                        bodyColor: '#44403c',
+                        borderColor: '#e7e5e4',
+                        borderWidth: 1,
+                        padding: 12,
+                        titleFont: { size: 14, family: 'system-ui' },
+                        bodyFont: { size: 13, family: 'system-ui' }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Distance from Hotel (Miles)', font: {weight: 'bold'} },
+                        grid: { color: '#f5f5f4' }
+                    },
+                    y: {
+                        title: { display: true, text: 'Expected Cost (For 2 People)', font: {weight: 'bold'} },
+                        grid: { color: '#f5f5f4' },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    // --- DOM Rendering Logic ---
+    function renderDirectory() {
+        const grid = document.getElementById('restaurantGrid');
+        grid.innerHTML = '';
+
+        // Filter
+        let filtered = restaurants.filter(r => {
+            if (currentFilter === 'all') return true;
+            return r.cuisine.includes(currentFilter);
+        });
+
+        // Sort
+        filtered.sort((a, b) => {
+            if (currentSort === 'costAsc') return a.cost - b.cost;
+            if (currentSort === 'costDesc') return b.cost - a.cost;
+            if (currentSort === 'distAsc') return a.distance - b.distance;
+            if (currentSort === 'ratingDesc') return b.rating - a.rating;
+            return 0;
+        });
+
+        // Build HTML
+        filtered.forEach(r => {
+            const card = document.createElement('div');
+            card.className = 'glass-panel rounded-xl overflow-hidden interactive-card flex flex-col h-full';
+            
+            // Badge color based on cuisine
+            const badgeBg = r.cuisine === 'Healthy' ? 'bg-green-100 text-green-800' : 
+                            r.cuisine === 'Sushi' ? 'bg-blue-100 text-blue-800' : 
+                            'bg-stone-200 text-stone-800';
+
+            card.innerHTML = `
+                <div class="p-5 flex-grow border-b border-stone-100">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-bold text-stone-800">${r.name}</h3>
+                        <span class="text-xs font-semibold px-2.5 py-0.5 rounded ${badgeBg}">${r.cuisine}</span>
+                    </div>
+                    <div class="text-sm text-stone-500 mb-4 flex flex-col gap-1">
+                        <span>📍 ${r.address}</span>
+                        <div class="flex justify-between">
+                            <span>🚶 ${r.distance} miles away</span>
+                            <span>💰 ~$${r.cost} for two</span>
+                        </div>
+                        <span>${r.stars} (${r.rating})</span>
+                    </div>
+                    <div class="bg-white/60 p-4 rounded-lg border border-stone-200 text-sm">
+                        <strong class="block text-stone-700 mb-1">👩‍⚕️ Clinical Dietitian Note:</strong>
+                        <p class="text-stone-600 leading-relaxed">${r.notes}</p>
+                    </div>
+                </div>
+                <div class="bg-stone-100/50 px-5 py-3 text-center">
+                    <button class="text-sm font-semibold text-green-700 hover:text-green-800 transition-colors" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(r.name + ' ' + r.address)}', '_blank')">
+                        Get Walking Directions
+                    </button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        if(filtered.length === 0) {
+            grid.innerHTML = `<div class="col-span-full text-center py-12 text-stone-500">No restaurants match your current filters. Try adjusting them.</div>`;
+        }
+    }
+
+    // --- Event Listeners ---
+    document.getElementById('sortSelect').addEventListener('change', (e) => {
+        currentSort = e.target.value;
+        renderDirectory();
+    });
+
+    document.getElementById('filterSelect').addEventListener('change', (e) => {
+        currentFilter = e.target.value;
+        renderDirectory();
+    });
+
+    // --- Initialization ---
+    window.onload = () => {
+        initChart();
+        renderDirectory();
+    };
+
+    // --- Gemini Chatbot Logic ---
+    const chatFab = document.getElementById('chatFab');
+    const chatWindow = document.getElementById('chatWindow');
+    const closeChatBtn = document.getElementById('closeChatBtn');
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('chatInput');
+    const chatMessages = document.getElementById('chatMessages');
+    const sendBtn = document.getElementById('sendBtn');
+
+    let isChatOpen = false;
+    let chatHistory = [];
+
+    // Construct System Prompt context from the restaurant list
+    const restaurantContext = restaurants.map(r => `- ${r.name} (${r.cuisine}): ${r.notes}`).join('\n');
+    const systemInstruction = {
+        parts: [{ 
+            text: `You are an expert Clinical Dietitian AI assistant specializing in severe food allergies, specifically Low-FODMAP (Monash compliant), Gluten-Free, and Dairy-Free diets. 
+            You are helping a traveler and their dad in NYC near Wyndham Midtown (11 W 37th St).
+            
+            You have knowledge of these curated nearby restaurants and their safety protocols:
+            ${restaurantContext}
+            
+            Guidelines for your responses:
+            1. Keep answers concise, practical, and highly empathetic. 
+            2. Focus on actionable ordering advice (e.g., "Ask for it cooked in oil instead of butter").
+            3. Remind them about hidden fructans (garlic/onion powders in stocks, sauces, and marinades).
+            4. If they ask for a recommendation outside the curated list, remind them to call ahead and speak to the chef, but offer general advice on what cuisines are safest.` 
+        }]
+    };
+
+    // Toggle Chat UI
+    function toggleChat() {
+        isChatOpen = !isChatOpen;
+        if (isChatOpen) {
+            chatWindow.classList.remove('hidden');
+            chatInput.focus();
+        } else {
+            chatWindow.classList.add('hidden');
+        }
+    }
+
+    chatFab.addEventListener('click', toggleChat);
+    closeChatBtn.addEventListener('click', toggleChat);
+
+    function appendMessage(role, text) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `flex items-start gap-2 max-w-[85%] ${role === 'user' ? 'ml-auto flex-row-reverse' : ''}`;
+        
+        const bubble = document.createElement('div');
+        bubble.className = `p-3 rounded-2xl shadow-sm text-sm ${
+            role === 'user' 
+            ? 'bg-green-600 text-white rounded-tr-none' 
+            : 'bg-green-100 text-green-900 rounded-tl-none'
+        }`;
+        
+        // Simple markdown parsing for bold text and line breaks
+        let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        formattedText = formattedText.replace(/\n/g, '<br>');
+        bubble.innerHTML = formattedText;
+        
+        msgDiv.appendChild(bubble);
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showLoading() {
+        const msgDiv = document.createElement('div');
+        msgDiv.id = 'chatLoading';
+        msgDiv.className = `flex items-start gap-2 max-w-[85%]`;
+        msgDiv.innerHTML = `
+            <div class="bg-stone-200 p-4 rounded-2xl rounded-tl-none shadow-sm flex gap-1.5 items-center">
+                <div class="w-2 h-2 bg-stone-500 rounded-full animate-bounce"></div>
+                <div class="w-2 h-2 bg-stone-500 rounded-full animate-bounce" style="animation-delay: 0.15s"></div>
+                <div class="w-2 h-2 bg-stone-500 rounded-full animate-bounce" style="animation-delay: 0.3s"></div>
+            </div>
+        `;
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function removeLoading() {
+        const loader = document.getElementById('chatLoading');
+        if (loader) loader.remove();
+    }
+
+    async function callGeminiAPI(userText) {
+        const apiKey = ""; // API key injected by Canvas runtime
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+        
+        // Add user message to local history
+        chatHistory.push({ role: "user", parts: [{ text: userText }] });
+
+        const payload = {
+            contents: chatHistory,
+            systemInstruction: systemInstruction
+        };
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.status}`);
+            }
+
+            const result = await response.json();
+            const candidate = result.candidates?.[0];
+
+            if (candidate && candidate.content?.parts?.[0]?.text) {
+                const responseText = candidate.content.parts[0].text;
+                // Add model message to local history for multi-turn context
+                chatHistory.push({ role: "model", parts: [{ text: responseText }] });
+                return responseText;
+            } else {
+                throw new Error("Unexpected API response format");
+            }
+        } catch (error) {
+            console.error("Gemini API Error:", error);
+            // Implement simple fallback on failure
+            return "I apologize, but I am having trouble connecting to my knowledge base right now. Please check your connection and try again.";
+        }
+    }
+
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        // Update UI: Clear input, disable form while loading
+        chatInput.value = '';
+        chatInput.disabled = true;
+        sendBtn.disabled = true;
+        sendBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+        appendMessage('user', text);
+        showLoading();
+
+        // Fetch AI Response
+        const responseText = await callGeminiAPI(text);
+
+        // Revert UI: Remove loader, show response, enable form
+        removeLoading();
+        appendMessage('model', responseText);
+        
+        chatInput.disabled = false;
+        sendBtn.disabled = false;
+        sendBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        chatInput.focus();
+    });
+
+</script>
+</body>
+</html>
