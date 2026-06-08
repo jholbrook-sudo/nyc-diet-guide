@@ -102,6 +102,59 @@
         </div>
     </section>
 
+    <!-- NEW SECTION: Penn Station & Central Park Route -->
+    <section class="mb-12">
+        <div class="glass-panel rounded-2xl p-6 md:p-8 border-t-4 border-blue-500">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">🚶 Penn Station to Central Park Route</h2>
+            <p class="text-stone-600 mb-6 leading-relaxed">
+                Walking from Penn Station (34th St & 8th Ave) up to Central Park (59th St) is a vibrant ~1.2 mile walk straight up 8th Avenue. Since Kelvin is arriving later in the evening, here are some notes on eating safely along this corridor:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-blue-50 p-5 rounded-xl border border-blue-100 shadow-sm">
+                    <h3 class="font-bold text-blue-900 text-lg mb-1">🍕 The "By-The-Slice" Pizza Reality</h3>
+                    <p class="text-sm text-stone-700"><strong>Severe Allergy Warning:</strong> Getting GF/DF/Low FODMAP pizza "by the slice" from a typical NYC window is virtually impossible due to severe flour cross-contamination and pre-made garlic/onion heavy sauces. Instead, go to a place like <strong>Don Antonio</strong> (on your route) and order a <strong>personal pie</strong>. Ask for a "white pizza" (no tomato sauce, no cheese) with safe olive oil, prosciutto, and arugula to ensure it is 100% safe.</p>
+                </div>
+                <div class="bg-yellow-50 p-5 rounded-xl border border-yellow-100 shadow-sm">
+                    <h3 class="font-bold text-yellow-900 text-lg mb-1">🥨 NYC Street Food Safety</h3>
+                    <p class="text-sm text-stone-700">Avoid Halal carts, hot dog stands, and pretzel carts (cross-contamination, garlic/onion marinades, gluten). <strong>Safe Street Food:</strong> Look for <strong>Fresh Fruit Carts</strong> (grab bananas or oranges) or <strong>Nuts4Nuts carts</strong>. Stick to plain roasted peanuts or macadamia nuts (avoid cashews/pistachios due to high FODMAPs, and avoid honey-roasted).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Broadway & Box Office Strategy -->
+    <section class="mb-12">
+        <div class="glass-panel rounded-2xl p-6 md:p-8 border-t-4 border-purple-500">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">🎭 Broadway Box Office Strategy</h2>
+            <p class="text-stone-600 mb-6 leading-relaxed">
+                Since you and your dad plan to walk to the box offices to secure the best prices for your shows, here is your logistical battle plan from your hotel at 11 W 37th St. Going directly to the box office is a great way to avoid online ticketing fees!
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Wicked -->
+                <div class="bg-purple-50 p-5 rounded-xl border border-purple-100 shadow-sm">
+                    <h3 class="font-bold text-purple-900 text-lg mb-1">🧙‍♀️ Wicked</h3>
+                    <p class="text-sm font-semibold text-purple-700 mb-2">Gershwin Theatre</p>
+                    <p class="text-sm text-stone-700 mb-3"><strong>📍 222 W 51st St</strong> (approx 0.9 miles walk)</p>
+                    <p class="text-sm text-stone-600">Walk directly up Broadway/7th Ave. Ask the box office agent if they have any partial view, standing room, or rush options available for the dates you are there.</p>
+                </div>
+                <!-- Two Strangers -->
+                <div class="bg-pink-50 p-5 rounded-xl border border-pink-100 shadow-sm">
+                    <h3 class="font-bold text-pink-900 text-lg mb-1">🍰 Two Strangers...</h3>
+                    <p class="text-sm font-semibold text-pink-700 mb-2">Longacre Theatre</p>
+                    <p class="text-sm text-stone-700 mb-3"><strong>📍 220 W 48th St</strong> (approx 0.7 miles walk)</p>
+                    <p class="text-sm text-stone-600">A shorter walk, just off Broadway. Because this is a newer musical transfer, your odds of securing excellent box office pricing are very high. Go right when the box office opens (usually 10 AM).</p>
+                </div>
+                <!-- TKTS Booth -->
+                <div class="bg-red-50 p-5 rounded-xl border border-red-200 shadow-sm">
+                    <h3 class="font-bold text-red-900 text-lg mb-1">🎟️ TKTS Times Square</h3>
+                    <p class="text-sm font-semibold text-red-700 mb-2">Under the Red Steps</p>
+                    <p class="text-sm text-stone-700 mb-3"><strong>📍 Broadway & 47th St</strong> (approx 0.6 miles walk)</p>
+                    <p class="text-sm text-stone-600">If the individual box offices don't have the prices you want, check the TKTS booth for 20-50% off same-day tickets. (Wicked is rarely on TKTS, but "Two Strangers" often is!).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Visualization Section -->
     <section class="mb-12">
         <div class="glass-panel rounded-2xl p-6 md:p-8">
@@ -136,11 +189,29 @@
                     <option value="ratingDesc">Sort: Rating (Highest First)</option>
                 </select>
                 <select id="filterSelect" class="bg-white border border-stone-300 text-stone-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 outline-none">
-                    <option value="all">Filter: All Cuisines</option>
+                    <option value="all">Category: All</option>
                     <option value="Healthy">Healthy / Bowls</option>
+                    <option value="Grocery/Market">Grocery & Markets</option>
                     <option value="American">American</option>
                     <option value="Sushi">Sushi / Japanese</option>
                     <option value="Seafood">Seafood / Steak</option>
+                    <option value="Pizza">Pizza / Italian</option>
+                    <option value="Bakery">Bakery / Cafe</option>
+                    <option value="Street Food">Street Food</option>
+                </select>
+                <select id="priceSelect" class="bg-white border border-stone-300 text-stone-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 outline-none">
+                    <option value="all">Price: All</option>
+                    <option value="$">Under $40</option>
+                    <option value="$$">$40 - $80</option>
+                    <option value="$$$">$80 - $150</option>
+                    <option value="$$$$">Over $150</option>
+                </select>
+                <select id="distanceSelect" class="bg-white border border-stone-300 text-stone-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5 outline-none">
+                    <option value="all">Distance: All (Up to 3 mi)</option>
+                    <option value="0.5">Under 0.5 miles</option>
+                    <option value="1.0">Under 1.0 miles</option>
+                    <option value="1.5">Under 1.5 miles</option>
+                    <option value="2.0">Under 2.0 miles</option>
                 </select>
             </div>
         </div>
@@ -268,12 +339,110 @@
             notes: "Famous for having a massive, dedicated Gluten-Free menu. Asian cuisine can be tricky for Low FODMAP, but they understand allergies. Stick to simple steamed dishes (steamed chicken/veggies) and use your own GF tamari. Explicitly request no garlic/onion in the wok.",
             address: "792 Lexington Ave (Upper East Side)",
             stars: "⭐⭐⭐⭐"
+        },
+        {
+            id: 7,
+            name: "Whole Foods Market (Bryant Park)",
+            cuisine: "Grocery/Market",
+            distance: 0.3,
+            cost: 30,
+            rating: 4.5,
+            modifiability: 10,
+            notes: "An absolute MUST for a traveler with strict allergies. Stop here to stock up your hotel room with naturally GF/DF snacks, plain rice cakes, safe fruits (like unripe bananas/blueberries), and plain deli meats. They also have a hot bar where you can find plain grilled chicken and steamed veggies.",
+            address: "1095 6th Ave (Overlooking Bryant Park)",
+            stars: "⭐⭐⭐⭐½"
+        },
+        {
+            id: 8,
+            name: "Trader Joe's (Murray Hill)",
+            cuisine: "Grocery/Market",
+            distance: 0.6,
+            cost: 30,
+            rating: 4.6,
+            modifiability: 10,
+            notes: "Great for stocking up on snacks. They clearly label Gluten-Free and Dairy-Free items. Look for their plain rice cakes, safe nuts (avoid cashews/pistachios for FODMAPs), and safe fruits like unripe bananas, blueberries, and kiwi. You can also find plain meats and eggs if your hotel has a kitchenette.",
+            address: "200 E 32nd St",
+            stars: "⭐⭐⭐⭐½"
+        },
+        {
+            id: 9,
+            name: "Target (Herald Square)",
+            cuisine: "Grocery/Market",
+            distance: 0.2,
+            cost: 25,
+            rating: 4.0,
+            modifiability: 10,
+            notes: "Super convenient small-format Target just down the street. Perfect for grabbing bottled water, simple safe snacks (like plain potato chips, plain macadamia nuts), and any basic toiletries you might have forgotten. Has a small grocery section for grabbing quick, label-friendly items.",
+            address: "112 W 34th St",
+            stars: "⭐⭐⭐⭐"
+        },
+        {
+            id: 10,
+            name: "Tavern on the Green",
+            cuisine: "American",
+            distance: 1.8,
+            cost: 160,
+            rating: 4.1,
+            modifiability: 6,
+            notes: "Iconic restaurant located right inside Central Park. Great for your Thursday sightseeing day. As a high-end establishment, they are very accustomed to allergies. You must explicitly state GF/DF/No Alliums. Order plain steak, plain roasted chicken, or salmon cooked in oil. Verify sides are just plain steamed vegetables without garlic.",
+            address: "W 67th St (Inside Central Park)",
+            stars: "⭐⭐⭐⭐"
+        },
+        {
+            id: 11,
+            name: "Don Antonio",
+            cuisine: "Pizza",
+            distance: 0.9,
+            cost: 50,
+            rating: 4.6,
+            modifiability: 7,
+            notes: "Located right on the walk between Penn Station and Central Park. They have dedicated GF ovens. Do NOT order by the slice; order a personal pie. For GF/DF/Low FODMAP, the safest option is a 'White Pizza' (no tomato sauce, no cheese) topped with olive oil, prosciutto, and arugula. If you want tomato sauce, verify it is JUST tomatoes and salt, with zero garlic/onion added.",
+            address: "309 W 50th St (Near 8th Ave)",
+            stars: "⭐⭐⭐⭐½"
+        },
+        {
+            id: 12,
+            name: "Dig (Columbus Circle)",
+            cuisine: "Healthy",
+            distance: 1.2,
+            cost: 35,
+            rating: 4.4,
+            modifiability: 8,
+            notes: "Excellent grab-and-go option right at the bottom of Central Park. It's a build-your-own bowl concept. Stick to plain bases like brown rice or greens, plain roasted chicken, and plain sweet potatoes. Skip all complex sauces and dressings. Always double-check with the server that the specific vegetable side hasn't been tossed in garlic.",
+            address: "300 W 57th St",
+            stars: "⭐⭐⭐⭐"
+        },
+        {
+            id: 13,
+            name: "Modern Bread and Bagel (UWS)",
+            cuisine: "Bakery",
+            distance: 2.0,
+            cost: 40,
+            rating: 4.8,
+            modifiability: 9,
+            notes: "A bit further up near Central Park, but it is a 100% Gluten-Free bakery and deli (Kosher). Very safe for cross-contamination. Excellent for grabbing a GF/DF smoked salmon sandwich (request plain cream cheese substitute if DF, or just stick to salmon/cucumber, avoiding onion). Great to take into the park.",
+            address: "472 Columbus Ave",
+            stars: "⭐⭐⭐⭐⭐"
+        },
+        {
+            id: 14,
+            name: "Fresh Fruit & Nut Carts",
+            cuisine: "Street Food",
+            distance: 0.1,
+            cost: 10,
+            rating: 4.0,
+            modifiability: 10,
+            notes: "Available all along 8th Ave and outside Central Park. Stick strictly to fresh whole fruits (bananas, oranges) or 'Nuts4Nuts' plain roasted peanuts. Do NOT eat from hot dog or halal carts, as the risk of gluten cross-contamination and garlic/onion marinades is extreme.",
+            address: "Various Locations (Penn to Central Park)",
+            stars: "⭐⭐⭐⭐"
         }
     ];
 
     // --- State Management ---
     let currentSort = 'costAsc';
     let currentFilter = 'all';
+    let currentPriceFilter = 'all';
+    let currentDistanceFilter = 'all';
 
     // --- Chart Initialization ---
     let restaurantChart;
@@ -356,8 +525,20 @@
 
         // Filter
         let filtered = restaurants.filter(r => {
-            if (currentFilter === 'all') return true;
-            return r.cuisine.includes(currentFilter);
+            let passCat = currentFilter === 'all' || r.cuisine.includes(currentFilter);
+            
+            let passPrice = true;
+            if (currentPriceFilter === '$') passPrice = r.cost <= 40;
+            else if (currentPriceFilter === '$$') passPrice = r.cost > 40 && r.cost <= 80;
+            else if (currentPriceFilter === '$$$') passPrice = r.cost > 80 && r.cost <= 150;
+            else if (currentPriceFilter === '$$$$') passPrice = r.cost > 150;
+
+            let passDist = true;
+            if (currentDistanceFilter !== 'all') {
+                passDist = r.distance <= parseFloat(currentDistanceFilter);
+            }
+
+            return passCat && passPrice && passDist;
         });
 
         // Sort
@@ -377,6 +558,10 @@
             // Badge color based on cuisine
             const badgeBg = r.cuisine === 'Healthy' ? 'bg-green-100 text-green-800' : 
                             r.cuisine === 'Sushi' ? 'bg-blue-100 text-blue-800' : 
+                            r.cuisine === 'Grocery/Market' ? 'bg-purple-100 text-purple-800' :
+                            r.cuisine === 'Pizza' ? 'bg-orange-100 text-orange-800' :
+                            r.cuisine === 'Bakery' ? 'bg-yellow-100 text-yellow-800' :
+                            r.cuisine === 'Street Food' ? 'bg-red-100 text-red-800' :
                             'bg-stone-200 text-stone-800';
 
             card.innerHTML = `
@@ -420,6 +605,16 @@
 
     document.getElementById('filterSelect').addEventListener('change', (e) => {
         currentFilter = e.target.value;
+        renderDirectory();
+    });
+
+    document.getElementById('priceSelect').addEventListener('change', (e) => {
+        currentPriceFilter = e.target.value;
+        renderDirectory();
+    });
+
+    document.getElementById('distanceSelect').addEventListener('change', (e) => {
+        currentDistanceFilter = e.target.value;
         renderDirectory();
     });
 
